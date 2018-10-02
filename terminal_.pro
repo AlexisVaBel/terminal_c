@@ -7,11 +7,13 @@ SOURCES += main.c \
     cmn/failures.c \
     parser/reader.c \
     parser/parse.c \
-    process/execute.c
+    process/execute.c \
+    process/comprocessor.c
 
 HEADERS += \
     cmn/failures.h \
     parser/reader.h \
     parser/parse.h \
-    process/execute.h
+    process/execute.h \
+    process/comprocessor.h
 

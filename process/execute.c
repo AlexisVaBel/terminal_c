@@ -3,20 +3,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <termios.h>
-#include <dirent.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/fcntl.h>
-#include <sys/ioctl.h>
-#include <sys/signal.h>
-#include <sys/types.h>
 
-const int kContinueCode = 1;
+const int kOKCode = 1;
 const int kBreakCode    = 0;
 
-// functions for work in buildin commands
+// functions for work in builtIn commands
 int term_help(char ** pntChCmds);
 int term_exit(char ** pntChCmds);
 int term_comports(char ** pntChCmds);
@@ -42,12 +33,12 @@ int term_funct_num(){
 
 int term_help(char **pntChCmds){
     int i;
-    printf("Author Alex Bel\n");
-    printf("Terminal help\n");
+    printf("==========Author Alex Bel==========\n");
+    printf("========== Terminal help ==========\n");
     for(i=0;i < term_funct_num();i++){
         printf("%s\n",term_cmds[i]);
     }
-    return kContinueCode;
+    return kOKCode;
 }
 
 int term_exit(char ** pntChCmds){
@@ -55,25 +46,13 @@ int term_exit(char ** pntChCmds){
 }
 
 int term_comports(char ** pntChCmds){
-    DIR *dir;
-    struct dirent *dp;
-    dir=opendir("/dev");
-
-    if(dir==0)return kBreakCode;
-    while((dp=readdir(dir))!=NULL){
-        if(sizeof(dp->d_name)>3){
-            if((dp->d_name[0]=='t')&&(dp->d_name[1]=='t')&&(dp->d_name[2]=='y')){
-                printf("port: %s\n",dp->d_name);
-            }
-        }
-    }
-    closedir(dir);
-    return kContinueCode;
+    cmds_ports(pntChCmds);
+    return kOKCode;
 }
 
 int process(char ** pntChCmds){
     int i=0;
-    int iResult = kContinueCode;
+    int iResult = kOKCode;
     if(*pntChCmds == NULL)return kBreakCode;
 
     for (i = 0; i < term_funct_num(); i++) {

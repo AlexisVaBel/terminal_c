@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #include <signal.h>
-
+#include <errno.h>
 #include "./process/execute.h"
 #include "./parser/reader.h"
 #include "./parser/parse.h"
@@ -17,6 +17,8 @@ void loop();
 
 void segfault_handler(int signo){
     fprintf(stderr,MAIN_MSG_FAULT);
+    sleep(10);
+    printf(errno);
     exit (-2);
 }
 
